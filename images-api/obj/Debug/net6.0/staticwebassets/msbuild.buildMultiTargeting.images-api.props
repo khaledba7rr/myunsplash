@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\images-api.props" />
+</Project>

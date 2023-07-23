@@ -1,0 +1,42 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    height: 85vh;
+    animation: show-container 2s ease-in-out;
+
+    .text {
+        font-family: 'Roboto Slab', serif;
+    }
+
+    .image {
+        text-align: center;
+        height: 70%;
+
+        img {
+            width: 90%;
+            height: 100%;
+        }
+    }
+}
+
+
+@media (max-width: 480px) {
+    .container {
+        .text {
+            font-size: 0.8rem;
+        }
+    }
+}
+
+@keyframes show-container {
+    0% {
+        background-color: #f4f4f4;
+        opacity: 0.3;
+    }
+    100% {
+        background-color: transparent;
+        opacity: 1;
+    }
+}

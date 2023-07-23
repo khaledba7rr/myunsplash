@@ -1,0 +1,31 @@
+<nav class="navbar">
+
+    <div class="first-flex">
+  
+      <div class="nav-logo">
+        <img routerLink="/" src="../assets/my_unsplash_logo.svg" alt="logo">
+      </div>
+      
+    
+      <div class="search">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input [disabled]="!uid" (input)="searchingForLabels($event)" type="text" placeholder="search by label">
+      </div>
+      
+  
+    </div>
+  
+    <div class="second-flex">
+
+      <div class="btn">
+        <button (click)=" uid ? handleAddPhoto() : navigateToRegisteration()">{{uid ? 'Add a photo' : 'Login/Signup'}}</button>
+      </div>
+
+      <div class="btn">
+        <button class="logout" *ngIf="uid" (click)="logout()">Logout</button>
+      </div>
+
+
+      
+    </div>
+  </nav>

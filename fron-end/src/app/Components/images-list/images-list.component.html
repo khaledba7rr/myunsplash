@@ -1,0 +1,59 @@
+<div *ngIf="!uid" class="welcome-message">
+    <h2>Welcome to myunsplash. Where you can create your photos splash easily ... <span routerLink="/registeration" class="register-text"> Login/Register </span> 
+        to create your own photos splash like this now </h2>
+</div>
+
+<div class="images-container">
+    
+     <div *ngFor="let image of imagesArray()" class="image">
+        <img [src]="image.imageUrl" [alt]="image.label">
+
+        <div class="image-details">
+            <div *ngIf="imagesArray() !== dummyImgArray" class="delete-btn" (click)="handleDeleteModal(image.imageGuid)">
+                <button>delete</button>
+                <i class="fa-solid fa-trash fa-bounce"></i>
+            </div>
+            <div class="image-label">
+                <p>{{image.label}}</p>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="loading" class="loading">
+        <svg class="spinner" viewBox="0 0 50 50">
+            <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+        </svg>
+    </div>
+
+</div>
+
+<div *ngIf="imagesArray() === filteredByLabelArray && filteredByLabelArray.length === 0" class="no-images">
+    <p>No image have that label, search again !</p>
+</div>
+
+<div *ngIf="databaseImgArray.length === 0 && uid" class="no-images">
+    <p>You haven't added any photos yet !. <span (click)="handleAddPhoto()" >Add some ?</span> </p>
+</div>
+
+
+<div (click)="handleDeleteModal('')" *ngIf="openDeleteModal" class="delete-modal">
+
+</div>
+
+<div *ngIf="openDeleteModal" class="delete-modal-info">
+    <div class="text">
+        <p>Are you sure?</p>
+    </div>
+    <div class="input">
+        <label for="password">Password</label>
+        <input [(ngModel)]="password" type="password" id="password" placeholder="*******">
+    </div>
+    <div *ngIf="loginError" class="error">
+        <div>{{loginError}}</div>
+        <div *ngIf="deletedText" class="success">{{deletedText}}</div>
+    </div>
+    <div class="btns">
+        <button class="cancel" (click)="handleDeleteModal('')">Cancel</button>
+        <button (click)="deleteImage()">Submit</button>
+    </div>
+</div>

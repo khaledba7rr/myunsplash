@@ -1,0 +1,76 @@
+<div class="registeration-container">
+
+    <div class="form-container">
+
+        <h2>{{isSignUp ? 'Sign up' : 'Login'}}</h2>
+
+        <form [formGroup]="registerationForm">
+
+            <div *ngIf="isSignUp" class="form-item">
+                <label for="name">Full Name</label>
+                <input placeholder="Joe Doe" type="text" id="name" formControlName="fullName">
+
+                <div *ngIf="fullName.touched && fullName.invalid" class="input-error">
+                    <i class="fa-solid fa-circle-exclamation fa-shake"></i>
+                    <div *ngIf="fullName.errors?.required">required field</div>
+                    <div *ngIf="fullName.errors?.minlength">cannot be less than 6 charachters</div>
+                </div>
+
+            </div>
+
+            <div class="form-item">
+                <label for="email">Email</label>
+                <input placeholder="Joe-doe@email.domain" type="text" id="email" formControlName="email">
+
+                <div *ngIf="email.touched && email.invalid" class="input-error">
+                    <i class="fa-solid fa-circle-exclamation fa-shake"></i>
+                    <div *ngIf="email.errors?.required">required field</div>    
+                    <div *ngIf="email.errors?.email">Email is not valid</div>
+                </div>
+
+            </div>
+
+            <div class="form-item">
+                <label for="password">Password</label>
+                <input placeholder="********" [type]="showPassword ? 'text' : 'password' " id="password" formControlName="password">
+                <i *ngIf="!showPassword" (click)="handleShowPassword()" class="fa-solid fa-eye"></i>
+                <i *ngIf="showPassword" (click)="handleShowPassword()" class="fa-solid fa-eye-slash"></i>
+
+                <div [ngClass]="(password.touched && password.invalid) ? 'show' : ''" class="input-error">
+                    <i class="fa-solid fa-circle-exclamation fa-shake"></i>
+                    <div *ngIf="password.errors?.required">required field</div>
+                    <div *ngIf="password.errors?.minlength">cannot be less than 6 charachters</div>
+                </div>
+
+            </div>
+
+        </form>
+
+        <div class="buttons">
+            <div (click)="hanldeSignUp()" class="sign-or-login">{{isSignUp ? "Login " : "Signup "}}instead ?</div>
+            <button  (click)="signupOrLogin()" [disabled]=" isSignUp ? registerationForm.invalid : (email.invalid || password.invalid)">{{isSignUp ? "Sign up" : "Login"}}</button>
+        </div>
+
+        <div *ngIf="authenticationError || authenticationSuccess" [ngSwitch]="authenticationError" class="authentication-error">
+            <!-- Sign up Error handling-->
+            <div *ngSwitchCase="'EMAIL_EXISTS'">This email is already registered. <span (click)="hanldeSignUp()">Login ?</span></div>
+            <div *ngSwitchCase="'OPERATION_NOT_ALLOWED'">There's error signing in/up ... please try again later</div>
+            <div *ngSwitchCase="'TOO_MANY_ATTEMPTS_TRY_LATER'">You've requested too many times ... try again later !</div>
+            <!-- Login Error handling-->
+            <div *ngSwitchCase="'EMAIL_NOT_FOUND'">Email isn't registered <span (click)="hanldeSignUp()">Register ? </span></div>
+            <div *ngSwitchCase="'INVALID_PASSWORD'">Invalid password</div>
+            <div *ngSwitchCase="'USER_DISABLED'">This user has been disabled by admin</div>
+            <div *ngSwitchCase="'Unknown Error'">Unknown error has occurred</div>
+            <!-- Successfull Register handling-->
+            <div *ngIf="authenticationSuccess" class="success">{{authenticationSuccess}} <span (click)="hanldeSignUp()"> login now</span></div>
+        </div>
+
+    </div>
+
+    <div *ngIf="loading" class="loading">
+        <svg class="spinner" viewBox="0 0 50 50">
+            <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+        </svg>
+    </div>
+
+</div>

@@ -1,0 +1,47 @@
+<div *ngIf="openModal$ | async" class="modal-container" (click)="handleAddImageModal()">
+
+</div>
+
+<div *ngIf="openModal$ | async" class="modal" >
+    <h2>Add a new photo</h2>
+    <form [formGroup]="newPhotoForm">
+
+        <div class="form-item">
+            <label for="label">label</label>
+            <input placeholder="lorem ipsum" type="text" id="label" formControlName="label">
+            <div *ngIf="label.touched && label.invalid" class="input-error">
+                <i class="fa-solid fa-circle-exclamation fa-shake"></i>
+                <div *ngIf="label.errors?.required">This field is required</div>
+                <div *ngIf="label.errors?.minlength">Label should be at least 4 chatachters</div>
+            </div>
+        </div>
+
+        <div class="form-item">
+            <label for="photo">photo URL</label>
+            <input (input)="checkIsImage(imageUrl.value)" formControlName="imageUrl" [placeholder]="imagePlaceholder" type="text" id="photo">
+
+            <div *ngIf="(imageUrl.touched && imageUrl.invalid) || imageUrlError" class="input-error">
+                <i class="fa-solid fa-circle-exclamation fa-shake"></i>
+                <div *ngIf="imageUrl.errors?.required">This field is required</div>
+                <div *ngIf="imageUrlError">{{imageUrlError}}</div>
+            </div>
+
+            <div *ngIf="imageUploadSuccess" class="success">
+                <i class="fa-solid fa-check fa-beat-fade"></i>
+                <div *ngIf="imageUploadSuccess">{{imageUploadSuccess}}</div>
+            </div>
+        </div> 
+    </form>
+
+    <div class="buttons">
+        <button (click)="handleAddImageModal()">cancel</button>
+        <button (click)="uploadImage()" [disabled]="newPhotoForm.invalid || loading">submit</button>   
+    </div>
+
+    <div *ngIf="loading" class="loading">
+        <svg class="spinner" viewBox="0 0 50 50">
+            <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+        </svg>
+    </div>
+
+</div>

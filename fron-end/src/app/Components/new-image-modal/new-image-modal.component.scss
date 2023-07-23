@@ -1,0 +1,228 @@
+$greyColor : #808080;
+$buttonColor : #3DB46D;
+$errorColor : #d50404;
+
+.modal-container {
+    background-color: rgba($color: $greyColor, $alpha: 0.4);
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.modal {
+    position: fixed;
+    left: 27%;
+    top: 20%;
+    z-index: 2;
+    min-height: 60vh;
+    width: 45vw;
+    background-color: white;
+    border-radius: 25px;
+    padding: 2%;
+    font-family: 'Noto Sans', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    animation: show-modal 1s ease-in-out;
+
+    h2 {
+        margin-bottom: 10px;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        * {
+            margin-bottom: 10px;
+        }
+
+        .form-item {
+            display: flex;
+            flex-direction: column;
+
+            label{
+                text-transform: capitalize;
+                font-size: 0.9rem;
+            }
+            
+            input {
+                padding: 2%;
+                border-radius: 10px;
+                outline: none;
+                border: 1px solid $greyColor;
+            }
+            .input-error {
+                color: $errorColor;
+                font-size: 0.8rem;
+                display: flex;
+                * {
+                    margin-right: 5px;
+                }
+            }
+            .success {
+                display: flex;
+                align-items: center;
+                * {
+                    margin-right: 10px;
+                }
+                i {
+                    color: $buttonColor;
+                }
+                color: $buttonColor;
+                font-size: 0.8rem;
+            }
+        }
+    }
+    
+    .buttons {
+        display: flex;
+        justify-content: flex-end;
+            button {
+                margin-left: 10px;
+                font-family: 'Noto Sans', sans-serif;
+                padding: 12px;
+                text-transform: capitalize;
+                border: none;
+                outline: none;
+                border-radius: 10px;
+                cursor: pointer;
+            }
+    
+            button:first-child {
+                background-color: transparent;
+            }
+    
+            button:last-child {
+                background-color: $buttonColor;
+                color: white;
+            }
+
+            button:disabled{
+                color: $greyColor;
+                cursor: not-allowed;
+            }
+    }
+
+    .loading {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1;
+        position: absolute;
+        top: 0%;
+        left: 0%;
+        .spinner {
+            animation: rotate 2s linear infinite;
+            z-index: 2;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin: -25px 0 0 -25px;
+            width: 50px;
+            height: 50px;
+            
+            .path {
+                stroke: $buttonColor;
+              stroke-linecap: round;
+              animation: dash 1.5s ease-in-out infinite;
+            }
+            
+          }
+        }
+}
+
+
+
+@media (max-width: 480px), (max-width: 780px) {
+
+        .modal{
+            left: 20%;
+            top: 25%;
+            width: 60vw;
+            min-height: 30vh;
+            padding: 4%;
+            font-size: 0.7rem;
+            animation: show-mobile-modal 1s ease-in-out;
+
+            form {
+                .form-item {
+                    label {
+                        font-size: 0.7rem;
+                    }
+                    input {
+                        padding: 5%;
+                        font-size: 0.7rem;
+                    }
+
+                    .input-error {
+                        font-size: 0.6rem;
+                    }
+                }
+            }
+
+            .buttons {
+                button {
+                    font-size: 0.6rem;
+                    padding: 8px;
+                }
+            }
+        }
+}
+
+
+
+@keyframes rotate {
+    100% {
+    transform: rotate(360deg);
+    }
+}
+
+@keyframes dash {
+    0% {
+    stroke-dasharray: 1, 150;
+    stroke-dashoffset: 0;
+    }
+    50% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -35;
+    }
+    100% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -124;
+    }
+}
+
+@keyframes show-modal {
+    0% {
+        top: 0%;
+        left: 27%;
+        background-color: #f4f4f4;
+    }
+
+    100% {
+        top: 20%;
+        left: 27%;
+        background-color: white;
+    }
+}
+
+@keyframes show-mobile-modal {
+    0% {
+        top: 0%;
+        left: 20%;
+        background-color: #f3f3f3;
+    }
+
+    100% {
+        top: 25%;
+        left: 20%;
+        background-color: white;
+    }
+}
